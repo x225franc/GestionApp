@@ -1,0 +1,40 @@
+{
+  "name": "GestionApp",
+  "productName": "GestionApp",
+  "version": "1.0.0",
+  "description": "Gestion app",
+  "main": ".vite/build/main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "echo \"No linting configured\""
+  },
+  "keywords": [],
+  "author": {
+    "name": "Alpha Malick DIAWARA",
+    "email": "102668503+x225franc@users.noreply.github.com"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@electron-forge/cli": "^7.11.1",
+    "@electron-forge/maker-deb": "^7.11.1",
+    "@electron-forge/maker-rpm": "^7.11.1",
+    "@electron-forge/maker-squirrel": "^7.11.1",
+    "@electron-forge/maker-zip": "^7.11.1",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.11.1",
+    "@electron-forge/plugin-fuses": "^7.11.1",
+    "@electron-forge/plugin-vite": "^7.11.1",
+    "@electron/fuses": "^1.8.0",
+    "electron": "41.2.2",
+    "vite": "^5.4.21"
+  },
+  "dependencies": {
+    "animate.css": "^4.1.1",
+    "chart.js": "^4.5.1",
+    "electron-squirrel-startup": "^1.0.1",
+    "electron-store": "^11.0.2"
+  }
+}

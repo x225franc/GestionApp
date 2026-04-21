@@ -1,0 +1,20 @@
+<div class="glass-card animate__animated animate__fadeIn" style="width: 100%; max-width: 700px;">
+    <h2 style="margin-top: 0; text-align: center;">Historique Complet</h2>
+    
+    <div style="display: flex; gap: 10px; margin-bottom: 25px; justify-content: center; flex-wrap: wrap;">
+        <select id="filter-type" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--glass-border); padding: 8px 15px; border-radius: 8px; outline: none; cursor: pointer;">
+            <option value="all" style="color: black;">Tout afficher</option>
+            <option value="gain" style="color: black;">Uniquement Gains (+)</option>
+            <option value="depense" style="color: black;">Uniquement Dépenses (-)</option>
+        </select>
+        
+        <select id="filter-date" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--glass-border); padding: 8px 15px; border-radius: 8px; outline: none; cursor: pointer;">
+            <option value="all" style="color: black;">Toutes les dates</option>
+            <option value="today" style="color: black;">Aujourd'hui</option>
+        </select>
+    </div>
+
+    <ul id="all-transactions-list" class="history-list">
+        <li style="text-align: center; color: var(--text-dim);">Chargement...</li>
+    </ul>
+</div>

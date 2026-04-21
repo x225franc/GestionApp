@@ -1,0 +1,21 @@
+<div class="glass-card animate__animated animate__fadeIn" style="width: 100%; max-width: 700px;">
+    <h2 style="margin-top: 0; text-align: center;">Statistiques</h2>
+    
+    <div style="display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; flex-wrap: wrap;">
+        <select id="chart-type" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--glass-border); padding: 8px 15px; border-radius: 8px; outline: none; cursor: pointer;">
+            <option value="line" style="color: black;">Courbe</option>
+            <option value="bar" style="color: black;">Barres</option>
+            <option value="doughnut" style="color: black;">Camembert</option>
+        </select>
+        
+        <select id="chart-data" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--glass-border); padding: 8px 15px; border-radius: 8px; outline: none; cursor: pointer;">
+            <option value="balance" style="color: black;">Évolution du Solde Global</option>
+            <option value="compare" style="color: black;">Comparaison Gains vs Dépenses</option>
+            
+        </select>
+    </div>
+
+    <div style="position: relative; height: 350px; width: 100%;">
+        <canvas id="myChart"></canvas>
+    </div>
+</div>

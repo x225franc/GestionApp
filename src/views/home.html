@@ -1,0 +1,36 @@
+<div class="glass-card animate__animated animate__fadeIn" style="text-align: center; margin-bottom: 20px;">
+    <p class="subtitle" style="margin-bottom: 5px;">Solde à date : <span id="date-du-jour"></span></p>
+    <h1 id="total-balance">0 FCFA</h1>
+</div>
+
+<div class="glass-card animate__animated animate__zoomIn">
+    <h2 style="margin-top: 0; text-align: center;">Enregistrement de transaction</h2>
+    <p class="subtitle" style="text-align: center;">Combien as-tu brassé (ou dépensé) aujourd'hui ?</p>
+
+    <form id="finance-form">
+        <div class="toggle-container">
+            <input type="radio" id="gain" name="type_transaction" value="gain" checked>
+            <label for="gain" class="toggle-btn gain-btn">🟢 Gain (+)</label>
+
+            <input type="radio" id="depense" name="type_transaction" value="depense">
+            <label for="depense" class="toggle-btn depense-btn">🔴 Dépense (-)</label>
+        </div>
+
+        <div class="input-group">
+            <input type="number" id="montant" placeholder="Ex: 5000" required min="1">
+            <span class="currency">FCFA</span>
+        </div>
+
+        <button type="submit" class="btn-submit">Enregistrer</button>
+    </form>
+
+    <div id="success-msg" class="hidden" style="text-align: center;">Enregistré avec succès !</div>
+</div>
+
+<div class="glass-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s; margin-top: 20px;">
+    <h3 style="margin-top: 0; margin-bottom: 15px; text-align: center;">10 Dernières transactions</h3>
+    
+    <ul id="history-list" class="history-list">
+        <li style="text-align: center; color: var(--text-dim);">Chargement...</li>
+    </ul>
+</div>
