@@ -1,7 +1,6 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow , Menu , ipcMain } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
-import { ipcMain } from 'electron';
 import Store from 'electron-store';
 
 // nom bdd
@@ -41,7 +40,7 @@ const createWindow = () => {
   }
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
@@ -50,6 +49,7 @@ const createWindow = () => {
 app.whenReady().then(() => {
   createWindow();
 
+  Menu.setApplicationMenu(null);
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   app.on('activate', () => {

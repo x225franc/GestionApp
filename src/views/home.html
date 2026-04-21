@@ -5,7 +5,7 @@
 
 <div class="glass-card animate__animated animate__zoomIn">
     <h2 style="margin-top: 0; text-align: center;">Enregistrement de transaction</h2>
-    <p class="subtitle" style="text-align: center;">Combien as-tu brassé (ou dépensé) aujourd'hui ?</p>
+    <p class="subtitle" style="text-align: center;">Combien as-tu encaissé (ou dépensé) aujourd'hui ?</p>
 
     <form id="finance-form">
         <div class="toggle-container">
@@ -16,10 +16,14 @@
             <label for="depense" class="toggle-btn depense-btn">🔴 Dépense (-)</label>
         </div>
 
-        <div class="input-group">
-            <input type="number" id="montant" placeholder="Ex: 5000" required min="1">
-            <span class="currency">FCFA</span>
-        </div>
+    <div class="input-group" style="margin-bottom: 15px;">
+        <input type="date" id="date-transaction" style="font-size: 1.1rem; padding: 12px;">
+    </div>
+
+    <div class="input-group">
+        <input type="number" id="montant" placeholder="Ex: 5000" required min="1">
+        <span class="currency">FCFA</span>
+    </div>
 
         <button type="submit" class="btn-submit">Enregistrer</button>
     </form>

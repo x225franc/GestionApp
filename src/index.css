@@ -108,6 +108,29 @@ button:hover {
   overflow: hidden; 
 }
 
+/* --- Style pour les filtres et selecteurs --- */
+.glass-input {
+    background: rgba(0, 0, 0, 0.15);
+    color: white;
+    border: 1px solid var(--glass-border);
+    padding: 8px 12px;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.glass-input:focus {
+    border-color: var(--accent-color);
+}
+
+/* Rend l'icône calendrier blanche sur les petits inputs */
+.glass-input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}
+
 /* --- Solde Total avec Gradient Text --- */
 #total-balance {
   font-size: 3.2rem;
@@ -225,3 +248,37 @@ input#depense:checked + .depense-btn {
 
 .history-amount { font-weight: 800; font-size: 1.15rem; }
 .history-date { font-size: 0.85rem; color: var(--text-dim); font-weight: 500; }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1); /* Rend l'icône du calendrier blanche */
+    cursor: pointer;
+}
+
+#date-transaction {
+    text-align: center;
+    color: white;
+    letter-spacing: 1px;
+}
+
+/* --- Bouton Supprimer --- */
+.btn-delete {
+  background: rgba(231, 76, 60, 0.15);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  color: #e74c3c;
+  border-radius: 8px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+  /* On annule le style par défaut de tes autres boutons "nav" */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.btn-delete:hover {
+  background: #e74c3c;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(231, 76, 60, 0.4);
+  border-color: #e74c3c;
+}
