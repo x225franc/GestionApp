@@ -1,20 +1,31 @@
-<div class="glass-card animate__animated animate__fadeIn" style="width: 100%; max-width: 700px;">
-    <h2 style="margin-top: 0; text-align: center;">Historique Complet</h2>  <br>
+<div class="glass-card animate__animated animate__fadeIn">
+    <h2 style="margin-top: 0; text-align: center; margin-bottom: 25px;">Historique Complet</h2>  
     
-    <div style="display: flex; gap: 10px; margin-bottom: 25px; justify-content: center; flex-wrap: wrap; align-items: center;">
-        <select id="filter-type" class="glass-input">
-            <option value="all" style="color: black;">Tout afficher</option>
-            <option value="gain" style="color: black;">Uniquement Gains (+)</option>
-            <option value="depense" style="color: black;">Uniquement Dépenses (-)</option>
-        </select> 
+    <div style="background: rgba(0, 0, 0, 0.4); padding: 15px; border-radius: 16px; border: 1px solid var(--glass-border); margin-bottom: 20px; display: flex; flex-direction: column; gap: 15px;">
         
-    <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; align-items: center;">
-            <span style="color: var(--text-dim); font-weight: bold;">Du</span>
-            <input type="date" id="filter-start-date" class="glass-input">
-            
-            <span style="color: var(--text-dim); font-weight: bold;">au</span>
-            <input type="date" id="filter-end-date" class="glass-input">
+        <div style="display: flex; justify-content: center;">
+            <select id="filter-type" class="glass-input" style="width: 100%; max-width: 400px; font-size: 1rem;">
+                <option value="all" style="color: black;">🔍 Tous les types de transactions</option>
+                <option value="gain" style="color: black;">🟢 Uniquement les Gains (+)</option>
+                <option value="depense" style="color: black;">🔴 Uniquement les Dépenses (-)</option>
+            </select> 
         </div>
+        
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; align-items: center; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 12px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="color: var(--accent-color); font-weight: bold;">📅 Du</span>
+                <input type="date" id="filter-start-date" class="glass-input">
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="color: var(--accent-color); font-weight: bold;">au</span>
+                <input type="date" id="filter-end-date" class="glass-input">
+            </div>
+        </div>
+    </div>
+
+    <div id="filter-total-container" style="text-align: center; margin-bottom: 20px; padding: 12px; background: rgba(0,210,255,0.05); border-radius: 12px; border: 1px dashed rgba(0,210,255,0.2);">
+        <span style="color: var(--text-dim); font-size: 0.9rem;">Total de la sélection :</span>
+        <strong id="filter-total-value" style="font-size: 1.4rem; margin-left: 10px; color: var(--accent-color);">0 FCFA</strong>
     </div>
 
     <ul id="all-transactions-list" class="history-list">

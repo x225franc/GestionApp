@@ -1,29 +1,43 @@
-<div class="glass-card animate__animated animate__fadeIn" style="width: 100%; max-width: 700px;">
-    <h2 style="margin-top: 0; text-align: center;">Statistiques Avancées</h2> <br>
+<div class="glass-card animate__animated animate__fadeIn">
+    <h2 style="margin-top: 0; text-align: center; margin-bottom: 25px;">Statistiques & Trading View</h2>
     
-    <div style="display: flex; gap: 10px; margin-bottom: 15px; justify-content: center; flex-wrap: wrap;">
-        <select id="chart-type" class="glass-input">
-            <option value="line" style="color: black;">Courbe</option>
-            <option value="bar" style="color: black;">Barres</option>
-            <option value="doughnut" style="color: black;">Camembert</option>
-        </select>
+    <div style="background: rgba(0, 0, 0, 0.4); padding: 15px; border-radius: 16px; border: 1px solid var(--glass-border); margin-bottom: 20px; display: flex; flex-direction: column; gap: 15px;">
         
-        <select id="chart-data" class="glass-input">
-            <option value="balance" style="color: black;">Évolution du Solde Global</option>
-            <option value="monthly" style="color: black;">Flux Mensuel (Gain vs Dépense)</option>
-            <option value="compare" style="color: black;">Répartition Globale</option>
-        </select>
+        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+            <select id="chart-type" class="glass-input" style="flex: 1; min-width: 150px;">
+                <option value="line" style="color: black;">📈 Courbe </option>
+                <option value="bar" style="color: black;">📊 Barres</option>
+                <option value="doughnut" style="color: black;">🍩 Camembert</option>
+            </select>
+            
+            <select id="chart-data" class="glass-input" style="flex: 2; min-width: 250px;">
+                <option value="balance" style="color: black;">💰 Évolution du Solde Global</option>
+                <option value="separated" style="color: black;">⚖️ Gains vs Dépenses (Temporel)</option>
+                <option value="only-gains" style="color: black;">🟢 Évolution des Gains Uniquement</option>
+                <option value="only-depenses" style="color: black;">🔴 Évolution des Dépenses Uniquement</option>
+                <option value="monthly" style="color: black;">📅 Flux Mensuel (G vs D)</option>
+                <option value="compare" style="color: black;">🥧 Répartition Globale</option>
+            </select>
+        </div>
+
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; align-items: center; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 12px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="color: var(--accent-color); font-weight: bold;">📅 Du</span>
+                <input type="date" id="chart-start-date" class="glass-input">
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="color: var(--accent-color); font-weight: bold;">au</span>
+                <input type="date" id="chart-end-date" class="glass-input">
+            </div>
+        </div>
     </div>
 
-    <div style="display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; flex-wrap: wrap; align-items: center;">
-        <span style="color: var(--text-dim); font-weight: bold;">Du</span>
-        <input type="date" id="chart-start-date" class="glass-input">
-        
-        <span style="color: var(--text-dim); font-weight: bold;">au</span>
-        <input type="date" id="chart-end-date" class="glass-input">
+    <div id="chart-total-container" style="text-align: center; margin-bottom: 20px;">
+        <span style="color: var(--text-dim); font-size: 0.9rem;">Solde sur la période affichée :</span>
+        <h2 id="chart-total-value" style="margin: 5px 0 0 0; color: var(--accent-color); font-size: 2rem;">0 FCFA</h2>
     </div>
 
-    <div style="position: relative; height: 350px; width: 100%;">
+    <div style="position: relative; height: 60vh; min-height: 500px; width: 100%;">
         <canvas id="myChart"></canvas>
     </div>
 </div>
