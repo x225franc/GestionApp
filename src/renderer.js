@@ -1,6 +1,7 @@
 import "./index.css";
 import "animate.css";
 import Chart from "chart.js/auto";
+import zoomPlugin from 'chartjs-plugin-zoom';
 
 // Imports des vues
 import homeHtml from "./views/home.html?raw";
@@ -9,6 +10,8 @@ import transactionsHtml from "./views/transactions.html?raw";
 
 const appContainer = document.getElementById("app");
 let currentChart = null;
+
+Chart.register(zoomPlugin);
 
 function getLocalTodayString() {
     const now = new Date();
@@ -271,9 +274,28 @@ async function initCharts() {
             type: typeSelector.value,
             data: { labels, datasets },
             options: {
-                responsive: true, maintainAspectRatio: false,
+                responsive: true, 
+                maintainAspectRatio: false,
                 interaction: { mode: 'index', intersect: false },
-                plugins: { legend: { labels: { color: "white", font: { weight: "bold" } } } },
+                plugins: { 
+                    legend: { labels: { color: "white", font: { weight: "bold" } } },
+                    tooltip: { backgroundColor: 'rgba(0, 0, 0, 0.8)', titleColor: '#00d2ff', bodyColor: '#fff', borderColor: 'rgba(255,255,255,0.2)', borderWidth: 1, padding: 12 },
+                    zoom: {
+                        pan: {
+                            enabled: true,
+                            mode: 'x', // Permet de cliquer-glisser de gauche à droite
+                        },
+                        zoom: {
+                            wheel: {
+                                enabled: true, // Permet de zoomer/dézoomer avec la molette de la souris
+                            },
+                            pinch: {
+                                enabled: true // Permet de zoomer avec les doigts sur un trackpad
+                            },
+                            mode: 'x',
+                        }
+                    }
+                },
                 scales: typeSelector.value === "doughnut" ? {} : {
                     x: { ticks: { color: "rgba(255,255,255,0.5)" }, grid: { display: false } },
                     y: { ticks: { color: "rgba(255,255,255,0.7)" }, grid: { color: "rgba(255,255,255,0.05)" }, position: 'right' }
@@ -284,4 +306,20 @@ async function initCharts() {
 
     [typeSelector, dataSelector, chartStartDate, chartEndDate].forEach(el => el && el.addEventListener("change", render));
     render();
+}
+
+// --- LOGIQUE PLEIN ÉCRAN ---
+const btnFullscreen = document.getElementById("btn-fullscreen");
+if (btnFullscreen) {
+    btnFullscreen.addEventListener("click", () => {
+        if (!document.fullscreenElement) {
+            // Passe en plein écran
+            document.documentElement.requestFullscreen().catch(err => console.log(err));
+            btnFullscreen.innerHTML = "🗗 Quitter Plein Écran";
+        } else {
+            // Quitte le plein écran
+            document.exitFullscreen();
+            btnFullscreen.innerHTML = "⛶ Plein Écran";
+        }
+    });
 }
