@@ -3,22 +3,36 @@
   <head>
     <meta charset="UTF-8" />
     <title>GestionApp</title>
-    <link rel="stylesheet" href="./src/index.css">
   </head>
   <body>
   <header>
     <h1>GestionApp</h1>
     <p class="subtitle">Application de Gestion Financière</p>
     <nav>
-  <button id="btn-home">Accueil</button>
-  <button id="btn-transactions">Transactions</button>
-  <button id="btn-chart">Statistiques</button>
-  <button id="btn-fullscreen">⛶ Plein Écran</button>
-</nav>
+      <button id="btn-home">Accueil</button>
+      <button id="btn-transactions">Transactions</button>
+      <button id="btn-chart">Statistiques</button>
+      <button id="btn-fullscreen">⛶</button>
+      <button id="btn-open-settings">⚙️</button>
+    </nav>
   </header>
 
   <main id="app">
-    </main>
+  </main>
+
+  <div id="settings-modal" class="modal-overlay">
+      <div class="modal-content">
+          <h2>Paramètres & Sauvegarde</h2>
+          <p style="color: var(--text-dim); margin-bottom: 20px; font-size: 0.9rem;">Sécurisez vos données ou restaurez une ancienne sauvegarde.</p>
+          
+          <button id="btn-export-data" class="action-btn btn-export">Sauvegarder vos données</button>
+          
+          <button id="btn-import-trigger" class="action-btn btn-import">Importer une sauvegarde</button>
+          <input type="file" id="file-import-data" accept=".json" style="display: none;">
+
+          <button id="btn-close-settings" class="btn-close-modal">Fermer</button>
+      </div>
+  </div>
 
   <script type="module" src="/src/renderer.js"></script>
 </body>

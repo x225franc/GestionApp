@@ -4,7 +4,9 @@ const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 module.exports = {
   packagerConfig: {
     asar: true,
-    icon: './assets/icon'
+    icon: './assets/icon.png',
+    name: 'GestionApp',
+    category: 'public.app-category.productivity',
   },
   rebuildConfig: {},
   makers: [

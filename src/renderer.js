@@ -3,7 +3,6 @@ import "animate.css";
 import Chart from "chart.js/auto";
 import zoomPlugin from 'chartjs-plugin-zoom';
 
-// Imports des vues
 import homeHtml from "./views/home.html?raw";
 import chartHtml from "./views/chart.html?raw";
 import transactionsHtml from "./views/transactions.html?raw";
@@ -19,7 +18,81 @@ function getLocalTodayString() {
     return (new Date(now - offset)).toISOString().split("T")[0];
 }
 
-// Router
+// --- INITIALISATION GLOBALE (Plein écran & Modale) ---
+const btnFullscreen = document.getElementById("btn-fullscreen");
+if (btnFullscreen) {
+    btnFullscreen.addEventListener("click", () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(err => console.log(err));
+            btnFullscreen.innerHTML = "🗗";
+        } else {
+            document.exitFullscreen();
+            btnFullscreen.innerHTML = "⛶";
+        }
+    });
+}
+
+const modalSettings = document.getElementById("settings-modal");
+const btnOpenSettings = document.getElementById("btn-open-settings");
+const btnCloseSettings = document.getElementById("btn-close-settings");
+const btnExport = document.getElementById("btn-export-data");
+const btnImportTrigger = document.getElementById("btn-import-trigger");
+const fileImport = document.getElementById("file-import-data");
+
+if(btnOpenSettings) btnOpenSettings.addEventListener("click", () => modalSettings.classList.add("active"));
+if(btnCloseSettings) btnCloseSettings.addEventListener("click", () => modalSettings.classList.remove("active"));
+
+if(btnExport) {
+    btnExport.addEventListener("click", async () => {
+        const data = (await window.db.get("transactions")) || [];
+        const dataStr = JSON.stringify(data, null, 2);
+        const blob = new Blob([dataStr], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement("a");
+        a.href = url;
+        const today = new Date().toISOString().split("T")[0];
+        a.download = `Backup_GestionApp_${today}.json`;
+        a.click();
+        
+        URL.revokeObjectURL(url);
+        modalSettings.classList.remove("active");
+    });
+}
+
+if(btnImportTrigger) btnImportTrigger.addEventListener("click", () => fileImport.click());
+
+if(fileImport) {
+    fileImport.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = async (event) => {
+            try {
+                const importedData = JSON.parse(event.target.result);
+                
+                if (Array.isArray(importedData)) {
+                    if (confirm("Attention : L'importation va écraser vos données actuelles. Êtes-vous sûr de vouloir continuer ?")) {
+                        await window.db.save("transactions", importedData);
+                        modalSettings.classList.remove("active");
+                        alert("Données restaurées avec succès !");
+                        
+                        location.reload(); 
+                    }
+                } else {
+                    alert("Erreur : Le fichier ne correspond pas à une sauvegarde de l'application.");
+                }
+            } catch (err) {
+                alert("Erreur : Fichier JSON corrompu ou invalide.");
+            }
+            e.target.value = ''; 
+        };
+        reader.readAsText(file);
+    });
+}
+
+// --- ROUTER ---
 document.getElementById("btn-home").addEventListener("click", () => navigate(homeHtml, "home"));
 document.getElementById("btn-transactions").addEventListener("click", () => navigate(transactionsHtml, "transactions"));
 document.getElementById("btn-chart").addEventListener("click", () => navigate(chartHtml, "chart"));
@@ -33,8 +106,7 @@ function navigate(content, viewName) {
     else if (viewName === "chart") initCharts();
 }
 
-/** * LOGIQUE HOME 
- */
+/** * LOGIQUE HOME */
 function initHomeLogic() {
     const form = document.getElementById("finance-form");
     const dateInput = document.getElementById("date-transaction");
@@ -82,6 +154,12 @@ function initHomeLogic() {
         dateInput.value = todayString; 
         updateHistory();
         updateTotal();
+        
+        const successMsg = document.getElementById("success-msg");
+        if (successMsg) {
+            successMsg.classList.remove("hidden");
+            setTimeout(() => successMsg.classList.add("hidden"), 3000);
+        }
     });
 }
 
@@ -132,8 +210,7 @@ async function updateTotal() {
     totalDisplay.innerText = `${total.toLocaleString("fr-FR")} FCFA`;
 }
 
-/** * LOGIQUE TRANSACTIONS 
- */
+/** * LOGIQUE TRANSACTIONS */
 async function initTransactionsLogic() {
     const list = document.getElementById("all-transactions-list");
     const filterType = document.getElementById("filter-type");
@@ -158,7 +235,6 @@ async function initTransactionsLogic() {
             transactions = transactions.filter((t) => new Date(t.date) <= e);
         }
 
-        // MAJ DU COMPTEUR DE SOLDE
         const sum = transactions.reduce((acc, t) => acc + t.montant, 0);
         if (totalValueDisplay) {
             totalValueDisplay.innerText = `${sum.toLocaleString("fr-FR")} FCFA`;
@@ -186,8 +262,7 @@ async function initTransactionsLogic() {
     render();
 }
 
-/** * LOGIQUE STATS (TRADING VIEW) 
- */
+/** * LOGIQUE STATS (TRADING VIEW) */
 async function initCharts() {
     const canvas = document.getElementById("myChart");
     const typeSelector = document.getElementById("chart-type");
@@ -213,7 +288,6 @@ async function initCharts() {
             transactions = transactions.filter((t) => new Date(t.date) <= e);
         }
 
-        // MAJ DU COMPTEUR DE SOLDE
         const sum = transactions.reduce((acc, t) => acc + t.montant, 0);
         if (chartTotalValue) {
             chartTotalValue.innerText = `${sum.toLocaleString("fr-FR")} FCFA`;
@@ -281,19 +355,8 @@ async function initCharts() {
                     legend: { labels: { color: "white", font: { weight: "bold" } } },
                     tooltip: { backgroundColor: 'rgba(0, 0, 0, 0.8)', titleColor: '#00d2ff', bodyColor: '#fff', borderColor: 'rgba(255,255,255,0.2)', borderWidth: 1, padding: 12 },
                     zoom: {
-                        pan: {
-                            enabled: true,
-                            mode: 'x', // Permet de cliquer-glisser de gauche à droite
-                        },
-                        zoom: {
-                            wheel: {
-                                enabled: true, // Permet de zoomer/dézoomer avec la molette de la souris
-                            },
-                            pinch: {
-                                enabled: true // Permet de zoomer avec les doigts sur un trackpad
-                            },
-                            mode: 'x',
-                        }
+                        pan: { enabled: true, mode: 'x' },
+                        zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'x' }
                     }
                 },
                 scales: typeSelector.value === "doughnut" ? {} : {
@@ -306,20 +369,4 @@ async function initCharts() {
 
     [typeSelector, dataSelector, chartStartDate, chartEndDate].forEach(el => el && el.addEventListener("change", render));
     render();
-}
-
-// --- LOGIQUE PLEIN ÉCRAN ---
-const btnFullscreen = document.getElementById("btn-fullscreen");
-if (btnFullscreen) {
-    btnFullscreen.addEventListener("click", () => {
-        if (!document.fullscreenElement) {
-            // Passe en plein écran
-            document.documentElement.requestFullscreen().catch(err => console.log(err));
-            btnFullscreen.innerHTML = "🗗 Quitter Plein Écran";
-        } else {
-            // Quitte le plein écran
-            document.exitFullscreen();
-            btnFullscreen.innerHTML = "⛶ Plein Écran";
-        }
-    });
 }
